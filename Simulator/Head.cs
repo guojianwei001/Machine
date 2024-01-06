@@ -2,6 +2,10 @@
 
 namespace Simulator;
 
+/// <summary>
+/// A head that can read and write symbols on the tape and move the tape left and right one (and only one) cell at a time.
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class Head<T>
 {
     private readonly Tape<T> _tape;

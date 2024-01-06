@@ -46,7 +46,7 @@ public class Machine
     /// </summary>
     /// <param name="state">The starting program _state</param>
     /// <param name="delay">The delay to apply to each cycle of the machine</param>
-    public void Run(string state = State.ANY, int delay = 0)
+    public void Run(string state, int delay = 0)
     {
         _state.Transition(state);
 
@@ -70,7 +70,7 @@ public class State
 {
     public const string ZERO = "0";
     public const string HALTED = "halt";
-    public const string ANY = "*";  // wildcard
+    public const string NO_CHANGE = "*";  // wildcard means no change
 
     private string _value;
 
@@ -83,12 +83,13 @@ public class State
         _value = val;
     }
 
-    public void Transition(string stat)
+    public void Transition(string state)
     {
-        _value = stat;
+        // TODO: What about NO_CHANGE?
+        _value = state;
     }
 
-    public bool IsHalted => Value == HALTED;
+    public bool IsHalted => Value.StartsWith(HALTED);
 }
 
 public class MachineEventArgs : EventArgs
