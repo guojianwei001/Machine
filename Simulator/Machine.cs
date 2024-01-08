@@ -6,8 +6,8 @@
 public class Machine
 {
     private readonly Table _table;
-    private readonly Head<char> _head;
-    private readonly Tape<char> _tape;
+    private readonly Head _head;
+    private readonly Tape _tape;
     private readonly State _state;
     private int _cycles;
 
@@ -35,8 +35,8 @@ public class Machine
 
     public Machine(List<char> symbols, string[] prog)
     {
-        _tape = new Tape<char>(symbols);
-        _head = new Head<char>(_tape, '_');
+        _tape = new Tape(symbols);
+        _head = new Head(_tape);
         _table = new Table(prog);
         _state = new State();
     }

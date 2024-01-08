@@ -5,19 +5,19 @@ namespace Simulator;
 /// <summary>
 /// A head that can read and write symbols on the tape and move the tape left and right one (and only one) cell at a time.
 /// </summary>
-/// <typeparam name="T"></typeparam>
-public class Head<T>
+public class Head
 {
-    private readonly Tape<T> _tape;
+    private readonly Tape _tape;
     private int _index;
-    private readonly T _empty;
+    private readonly char _emptyCell = Symbol.BLANK_ON_TAPE[0]; // The empty cell state. Used when expanding tape
 
-    /// <param name="tape">paper tape</param>
-    /// <param name="emptyCell">The empty cell state. Used when expanding tape</param>
-    public Head(Tape<T> tape, T emptyCell)
+    /// <summary>
+    /// write and read on paper tape
+    /// </summary>
+    /// <param name="tape"></param>
+    public Head(Tape tape)
     {
         _index = 0;
-        _empty = emptyCell;
         _tape = tape;
     }
 
@@ -28,7 +28,7 @@ public class Head<T>
     public void MoveRight()
     {
         if (_index == _tape.Count - 1)
-            _tape.Add(_empty);
+            _tape.Add(_emptyCell);
 
         _index++;
     }
@@ -40,57 +40,51 @@ public class Head<T>
     public void MoveLeft()
     {
         if (_index == 0)
-            _tape.Insert(0, _empty);
+            _tape.Insert(0, _emptyCell);
         else
             _index--;
     }
 
-    public T Read() => _tape[_index];
+    public char Read() => _tape[_index];
 
-    public void Write(T item)
+    public void Write(char item)
     {
         _tape[_index] = item;
     }
 }
 
-public class Tape<T> : IEnumerable
+public class Tape : IEnumerable
 {
-    private readonly List<T> _cells;
+    private readonly List<char> _cells;
 
     /// <summary>
     /// tape
     /// </summary>
     /// <param name="symbols">The initial tape state</param>
-    public Tape(List<T> symbols)
+    public Tape(List<char> symbols)
     {
         _cells = symbols;
     }
 
     public int Count => _cells.Count;
 
-    public T this[int index]
+    public char this[int index]
     {
         get => _cells[index];
         set => _cells[index] = value;
     }
 
-    public void Add(T item)
+    public void Add(char item)
     {
         _cells.Add(item);
     }
 
-    public void Insert(int index, T item)
+    public void Insert(int index, char item)
     {
         _cells.Insert(index, item);
     }
 
     public override string ToString() => string.Join(string.Empty, _cells);
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        foreach (var item in _cells)
-        {
-            yield return item;
-        }
-    }
+    IEnumerator IEnumerable.GetEnumerator() => _cells.GetEnumerator();
 }

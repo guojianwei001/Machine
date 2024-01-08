@@ -20,7 +20,7 @@ https://morphett.info/turing/turing.html
 public class Table
 {
     private readonly CodeMatch<string, string, string[]> codeDictionary;
-    private readonly string comment = ";";
+    private readonly string COMMENT = ";";
     private const char SEPARATOR = ' ';
 
     /// <param name="program">The code splitted by lines</param>
@@ -30,7 +30,7 @@ public class Table
 
         foreach (var line in program)
         {
-            if (line.StartsWith(comment))
+            if (line.StartsWith(COMMENT))
                 continue;
 
             var tmp = line.Split(SEPARATOR);
@@ -44,13 +44,6 @@ public class Table
 
             codeDictionary[tmp[0]].Add(tmp[1], tmp.Skip(2).ToArray());
         }
-    }
-
-    /// <param name="program">The code splitted by lines</param>
-    /// <param name="comment">The comment delimiter to use</param>
-    public Table(string[] program, string comment) : this(program)
-    {
-        this.comment = comment;
     }
 
     /// <summary>
@@ -116,7 +109,7 @@ public class Instruction
         _command = cmd;
     }
 
-    public void Execute(Head<char> head, State state)
+    public void Execute(Head head, State state)
     {
         if (IsWriteOrErase)
             head.Write(Convert.ToChar(IsErase ? SPACE : _command[0]));
@@ -129,13 +122,13 @@ public class Instruction
         state.Transition(_command[2]);
     }
 
-    public bool IsWriteOrErase => _command[0] != NO_CHANGE;
+    private bool IsWriteOrErase => _command[0] != NO_CHANGE;
 
-    public bool IsErase => _command[0] == ERASURE;
+    private bool IsErase => _command[0] == ERASURE;
 
-    public bool IsMoveRight => _command[1] == MOVE_RIGHT;
+    private bool IsMoveRight => _command[1] == MOVE_RIGHT;
 
-    public bool IsMoveLeft => _command[1] == MOVE_LEFT;
+    private bool IsMoveLeft => _command[1] == MOVE_LEFT;
 }
 
 /// <summary>

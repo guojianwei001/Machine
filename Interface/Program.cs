@@ -73,9 +73,7 @@ internal class Program
     private static void Print(string tape)
     {
         Console.WriteLine();
-
-        foreach (var c in tape)
-            Console.Write(c);
+        Console.Write(tape);
     }
 
     private static void Print(string tape, int cycles, TimeSpan elapsed)
