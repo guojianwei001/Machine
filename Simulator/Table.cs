@@ -30,10 +30,17 @@ public class Table
 
         foreach (var line in program)
         {
-            if (line.StartsWith(COMMENT))
+            if (line.StartsWith(COMMENT) ||
+                string.IsNullOrWhiteSpace(line))
                 continue;
 
-            var tmp = line.Split(SEPARATOR);
+            string lineCode = line.Trim();
+            if (lineCode.Contains(COMMENT))
+            {
+                lineCode = lineCode.Substring(0, lineCode.IndexOf(COMMENT)).Trim();
+            }
+
+            var tmp = lineCode.Split(SEPARATOR);
             if (tmp.Length != 5)
                 continue;
 

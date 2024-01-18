@@ -1,4 +1,7 @@
-﻿0 _ _ r 1
+﻿; Binary addition - adds two binary numbers
+; Input: two binary numbers, separated by a single space, eg '100 1110'
+
+0 _ _ r 1
 0 * * r 0
 1 _ _ l 2
 1 * * r 1
@@ -12,11 +15,11 @@
 4x 0 x r 0
 4x 1 y r 0
 4x _ x r 0
-4x * * l 4x
+4x * * l 4x    ; skip the x/y's
 4y 0 1 * 5
 4y 1 0 l 4y
 4y _ 1 * 5
-4y * * l 4y
+4y * * l 4y    ; skip the x/y's
 5 x x l 6
 5 y y l 6
 5 _ _ l 6

@@ -1,4 +1,8 @@
-﻿0 * * * a
+﻿; 4-state busy beaver
+; When run with blank input, prints a number of 1's then halts.
+; See, eg, http://en.wikipedia.org/wiki/Busy_beaver for background on the busy beaver problem.
+
+0 * * * a
 
 a _ 1 r b
 a 1 1 l b
@@ -8,3 +12,6 @@ c _ 1 r halt
 c 1 1 l d
 d _ 1 r d
 d 1 _ r a
+
+
+
