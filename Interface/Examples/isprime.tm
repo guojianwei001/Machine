@@ -1,4 +1,10 @@
-﻿0 * * l 1
+﻿; Tests if a given number is prime.
+; Input: a single natural number in binary.
+
+; This is very inefficient and slow, so be prepared to wait!
+
+; set up environment
+0 * * l 1
 1 * a r 2
 2 _ b l 3
 2 * * r 2
@@ -41,10 +47,12 @@
 21 * * r 21
 22 1 0 r 23
 22 0 1 l 22
-22 c ! * error
+22 c ! * error   ; should not happen if input is valid
 23 d d r 50
 23 * * r 23
 
+
+; copy c to d (assuming d is blank and head is on or left of c)
 50 c c r 51
 50 x x r 51
 50 y y r 51
@@ -60,16 +68,18 @@
 53 y 1 l 53
 53 c c r 60
 
+
+; subtract d from b
 60 _ _ l 61
 60 * * r 60
 61 1 0 l 62
 61 0 1 l 61
-61 d d r 70
+61 d d r 70  ; d reached 0
 62 c c l 63
 62 * * l 62
 63 1 0 r 60
 63 0 1 l 63
-63 b b r 80
+63 b b r 80 ; b reached 0
 70 _ _ l 71
 70 * * r 70
 71 d d l 72
@@ -77,16 +87,18 @@
 72 c c * 50
 72 * * l 72
 
+
+; decrement c, clear d
 80 _ _ l 81a
 80 * * r 80
-81a 0 1 r 81b
+81a 0 1 r 81b   ; need to test if d == c-1 - if so, found a factor!
 81a 1 0 l 81a
-81a d d r 81k
+81a d d r 81k     ; not a factor, clean up as normal
 81b _ _ l 81c
 81b * * r 81b
 81c x x l 81c
 81c y y l 81c
-81c d d r 100
+81c d d r 100  ; found a factor, need to check if it is 1 though TODO: right environment for jump to 100?
 81c 0 x l 81dx
 81c 1 y l 81dy
 81dx d d l 81ex
@@ -94,11 +106,11 @@
 81dy d d l 81ey
 81dy * * l 81dy
 81ex 0 x r 81f
-81ex 1 1 r 81k
+81ex 1 1 r 81k    ; not a factor
 81ex x x l 81ex
 81ex y y l 81ex
 81ey 1 y r 81f
-81ey 0 0 r 81k
+81ey 0 0 r 81k    ; not a factor
 81ey x x l 81ey
 81ey y y l 81ey
 81f _ _ l 81c
@@ -117,7 +129,7 @@
 
 82 1 0 l 83
 82 0 1 l 82
-82 c c * error
+82 c c * error    ; should never happen!
 83 c c l 84
 83 * * l 83
 84 b b l 85
@@ -143,6 +155,9 @@
 91 c c r 51
 91 * * r 91
 
+; cleanup from 81xx
+; we are one cell right of d, right of d is xy, left of d is xy
+; need to erase d, revert c from xy, move one cell left of d for jump to 200
 100 _ _ l 101
 100 * * r 100
 101 d d l 102
@@ -153,14 +168,20 @@
 103 d d l 200
 103 * * r 103
 
+
+; found a factor, but need to check if it is 1 or > 1.
+; assuming we are one cell left of d, and d is blank.
+; try to decrement c twice.
+; assuming we can decrement it once at least, since c >= 1
 200 1 0 r 201
 200 0 1 l 200
 201 d d l 202
 201 * * r 201
-202 1 0 r 600
+202 1 0 r 600   ; a is not prime.
 202 0 1 l 202
-202 c c r 500
+202 c c r 500   ; a is prime.
 
+; Is a prime! Phew.
 500 _ _ l 501
 500 * * r 500
 501 b _ l 502
@@ -179,6 +200,7 @@
 510 * e r 511
 511 * ! * halt
 
+; Not a prime. D'oh.
 600 _ _ l 601
 600 * * r 600
 601 b _ l 602
@@ -200,3 +222,5 @@
 614 * m r 615
 615 * e r 616
 616 * . * halt
+
+

@@ -8,10 +8,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Machine\Machine.csproj" />
+    <ProjectReference Include="..\Simulator\Simulator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Examples\binmultiple.tm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\utm.tm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\evalbool.tm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\parencheck.tm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\turingseq.tm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\binsum.tm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
